@@ -3,7 +3,6 @@ import express from "express";
 const app = express();
 app.use(express.json());
 
-// Denenecek güvenilir sunucu listesi
 const MIRRORS = [
   "https://api.cobalt.tools/api/json",
   "https://cobalt.api.destruct.top/api/json",
@@ -14,15 +13,15 @@ app.post("/api/download", async (req, res) => {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: "URL gerekli" });
 
-  // Sunucuları sırayla dene
   for (const mirror of MIRRORS) {
     try {
-      console.log(`Deneniyor: ${mirror}`);
       const response = await fetch(mirror, {
         method: "POST",
         headers: {
           "Accept": "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          // KENDİMİZİ GERÇEK BİR TARAYICI GİBİ TANITIYORUZ (ÖNEMLİ!)
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         },
         body: JSON.stringify({
           url: url,
@@ -30,22 +29,19 @@ app.post("/api/download", async (req, res) => {
           vQuality: "720",
           isNoTTWatermark: true
         }),
-        // 8 saniye içinde cevap gelmezse iptal et (Vercel timeout'a girmeden diğerini denesin)
-        signal: AbortSignal.timeout(8000) 
+        signal: AbortSignal.timeout(10000) // 10 saniye bekle
       });
 
       if (response.ok) {
         const data = await response.json();
-        return res.json(data); // Başarılıysa sonucu dön ve döngüden çık
+        return res.json(data);
       }
     } catch (err: any) {
       console.error(`${mirror} hatası:`, err.message);
-      // Bu ayna çalışmadıysa döngü devam edecek ve bir sonrakini deneyecek
     }
   }
 
-  // Eğer hiçbir sunucu çalışmazsa hata dön
-  res.status(503).json({ error: "Şu an tüm indirme sunucuları yoğun. Lütfen birkaç dakika sonra tekrar deneyin." });
+  res.status(503).json({ error: "İndirme sunucuları şu an yanıt vermiyor. Lütfen 1 dakika sonra tekrar deneyin." });
 });
 
 export default app;
