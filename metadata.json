@@ -1,0 +1,5 @@
+{
+  "name": "Social Downloader",
+  "description": "A minimal app to download videos and images from X, Instagram, and TikTok.",
+  "requestFramePermissions": []
+}
