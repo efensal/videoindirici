@@ -39,9 +39,10 @@ app.post("/api/download", async (req, res) => {
         const data = await response.json();
         return res.json(data);
       }
-    } catch (err: any) {
-      console.error(`${mirror} hatası:`, err.message);
-    }
+   } catch (err: any) {
+  // Vercel Logs kısmında hatanın nedenini (403, 429, Timeout vb.) göreceğiz
+  console.error(`KRİTİK HATA [${mirror}]:`, err.message);
+}
   }
 
   res.status(503).json({ error: "İndirme sunucuları şu an yanıt vermiyor. Lütfen 1 dakika sonra tekrar deneyin." });
