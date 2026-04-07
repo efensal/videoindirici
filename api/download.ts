@@ -6,7 +6,10 @@ app.use(express.json());
 const MIRRORS = [
   "https://api.cobalt.tools/api/json",
   "https://cobalt.api.destruct.top/api/json",
-  "https://api.cobalt.red/api/json"
+  "https://api.cobalt.red/api/json",
+  "https://cobalt-api.kwiateusz.pl/api/json",
+  "https://api.cobalt.black/api/json"
+];
 ];
 
 app.post("/api/download", async (req, res) => {
