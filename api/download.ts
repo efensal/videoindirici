@@ -22,13 +22,17 @@ app.post("/api/download", async (req, res) => {
       const response = await fetch(mirror, {
         method: "POST",
         headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          // BURASI 2. ADIM: Kendimizi gerçek bir kullanıcı gibi tanıtıyoruz
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-          "Origin": "https://cobalt.tools",
-          "Referer": "https://cobalt.tools/"
-        },
+                   "Accept": "application/json",
+                   "Content-Type": "application/json",
+                   "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+                   "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+                   "Sec-Ch-Ua": '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
+                   "Sec-Ch-Ua-Mobile": "?0",
+                   "Sec-Ch-Ua-Platform": '"Windows"',
+                   "Sec-Fetch-Dest": "empty",
+                   "Sec-Fetch-Mode": "cors",
+                   "Sec-Fetch-Site": "same-origin"
+},
         body: JSON.stringify({
           url: url,
           vCodec: "h264",
