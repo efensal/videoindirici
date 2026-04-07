@@ -61,4 +61,14 @@ app.post("/api/download", async (req, res) => {
   });
 });
 
+// Dosyanın en altına, export default app; satırından hemen önce ekle:
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Sunucu ${PORT} portunda başarıyla başlatıldı.`);
+});
+
+export default app;
+
 export default app;
